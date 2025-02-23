@@ -38,3 +38,11 @@ sudo certbot certonly \
 --manual \
 --preferred-challenges=dns \
 -d *. saileshramesh.xyz
+--server https: //acme-v02.api.letsencrypt.org/directory
+
+
+If we need to get individual ssl certs we can perform following:
+certbot --nginx
++++++++++++++++++++++++++++++++++++++++++++++++++
+
+while true; do curl -sL https://latency.saileshramesh.xyz | grep -i '\-server'; sleep 1; echo "The Count value is $I"; sleep 1; I=$ ( ( $1 + 1 )); done
