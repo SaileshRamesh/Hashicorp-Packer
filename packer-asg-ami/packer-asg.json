@@ -1,0 +1,48 @@
+{
+    "_comment" : "Create a AWS AMI for ALB and Auto Scaling groups",
+    "variables": {
+      "aws_access_key": "",
+      "aws_secret_key": "",
+      "region": "",
+      "source_ami":"",
+      "instance_type":"",
+      "vpc_id": "",
+      "subnet_id": ""
+    },
+    "_comment1" : "packer build -var \"aws_secret_key=foo\" template.json",
+    "_comment2" : "packer build -var-file packer-alb-vars.json template.json",
+    "builders": [{
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "type": "amazon-ebs",
+      "region": "{{user `region`}}",
+      "source_ami": "{{user `source_ami`}}",
+      "instance_type": "{{user `instance_type`}}",
+      "ssh_username": "ubuntu",
+      "ami_name": "auto-scaling-build-{{isotime | clean_resource_name}}",
+      "vpc_id": "{{user `vpc_id`}}",
+      "subnet_id": "{{user `subnet_id`}}",
+      "tags": {
+        "Name": "auto-scaling-build-{{isotime | clean_resource_name}}"
+      }
+    }],
+    "provisioners": [{
+      "type": "shell",
+      "inline": [
+        "sleep 30",
+        "sudo apt update",
+        "sudo apt install -yq software-properties-common",
+        "sudo apt-add-repository --yes --update ppa:ansible/ansible",
+        "sudo apt update",
+        "sudo apt install ansible -y",
+        "sudo apt install nginx -y",
+        "sudo apt install -y python3",
+        "sudo apt install -y python3-apt",
+        "sudo apt install git -y",
+        "sudo apt install stress -y",
+        "sudo git clone https://github.com/saikiranpi/autoscaling_testing.git /myrepo",
+        "sleep 10"
+        ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+    "aws_access_key": "xxxx",
+    "aws_secret_key": "xxxx",
+    "region": "us-east-1",
+    "source_ami": "ami-xxxx",
+    "instance_type": "t2.micro",
+    "vpc_id": "vpc-xxxx",
+    "subnet_id": "subnet-xxxx",
+    "ssh_username": "ubuntu"
+}
